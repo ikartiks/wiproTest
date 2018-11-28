@@ -18,8 +18,7 @@ import wipro.wiprotest.utility.retriveObject
 import wipro.wiprotest.utility.saveObject
 import wipro.wiprotest.viewmodel.LandingViewModel
 
-
-
+// note the use of base activity class for common functionality
 class ActivityLanding : ActivityBase(),LandingRecyclerAdapter.OnItemClickListener {
 
     lateinit var viewModel: LandingViewModel
@@ -112,7 +111,9 @@ class ActivityLanding : ActivityBase(),LandingRecyclerAdapter.OnItemClickListene
     }
 
     override fun onItemClick(view: View, position: Int) {
-        showCustomMessage((view.tag as String)+ " clicked")
+
+        view.tag?.let { showCustomMessage((view.tag as String)+ " clicked") }
+
     }
 
 }
