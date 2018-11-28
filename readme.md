@@ -14,6 +14,8 @@ Things to note
   - I havent provided gradle wrapper, please select default one. Gradle.properties file has also been modified for instrumentation tests and hence commited
   - Implimented both swipe to refresh and refresh on button click
   - The app targets the android version 28 and is backword compatible.
+  - I havent added a loader right now for the network call, but for the same I would ideally use my library below and show a beautiful gif insted of a std popup.
+  - Will make optimizations on request.
 
 ### Other
 
