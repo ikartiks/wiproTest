@@ -1,4 +1,8 @@
 <resources>
-    <string name="app_name">wiprotest</string>
+    <string name="app_name">Wipro Test</string>
     <string name="refresh">Refresh</string>
+    <string name="noInternet">Oops... looks like you are not connected, connect to the internet and hit refresh.
+    </string>
+    <string name="fileName">data</string>
+
 </resources>

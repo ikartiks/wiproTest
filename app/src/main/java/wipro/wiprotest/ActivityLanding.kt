@@ -28,6 +28,7 @@ class ActivityLanding : ActivityBase(),LandingRecyclerAdapter.OnItemClickListene
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing)
         setSupportActionBar(toolbar)
+        viewModel = ViewModelProviders.of(this).get(LandingViewModel::class.java)
 
         context=this
     }
@@ -40,7 +41,7 @@ class ActivityLanding : ActivityBase(),LandingRecyclerAdapter.OnItemClickListene
         handler.postDelayed ({
 
             //for caching
-            val data = retriveObject(this,"data")
+            val data = retriveObject(this,getString(R.string.fileName))
             data?.let { onDataChange(it) }
 
             swipeRefreshLayout.setOnRefreshListener {
@@ -49,11 +50,15 @@ class ActivityLanding : ActivityBase(),LandingRecyclerAdapter.OnItemClickListene
                 refresh()
             }
 
-            viewModel = ViewModelProviders.of(this).get(LandingViewModel::class.java)
+            if(!isConnected()){
+                showCustomMessage(getString(R.string.noInternet))
+                return@postDelayed
+            }
+
             viewModel.getMutableObject()?.observe(this, object : Observer<Data> {
                 override fun onChanged(data: Data?) {
 
-                    data?.let { saveObject(context, data!!, "data") }
+                    data?.let { saveObject(context, data!!, getString(R.string.fileName)) }
                     onDataChange(data)
                 }
             })
@@ -63,13 +68,16 @@ class ActivityLanding : ActivityBase(),LandingRecyclerAdapter.OnItemClickListene
     // note the use of inline functions to reduce repetition of code at various places.
     inline fun refresh(){
 
+        if(!isConnected()){
+            showCustomMessage(getString(R.string.noInternet))
+            return
+        }
         viewModel.refreshData()
         val adapter = recyclerView.adapter as LandingRecyclerAdapter?
         adapter?.clearItems()
         adapter?.notifyDataSetChanged()
         viewModel.getMutableObject()?.observe(this, object : Observer<Data> {
             override fun onChanged(data: Data?) {
-
                 onDataChange(data)
             }
         })
