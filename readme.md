@@ -11,8 +11,8 @@ Things to note
 
   - Used kotlin (its DI for views as well) , retrofit, picasso, roboelectric
   - MVVM pattern with view models and live data as requested
-  - Kindly note I havent provided gradle wrapper, please select default one. Gradle.properties file has also been modified for instrumentation tests and hence commited
-  - implimented both swipe to refresh and refresh on button click
+  - I havent provided gradle wrapper, please select default one. Gradle.properties file has also been modified for instrumentation tests and hence commited
+  - Implimented both swipe to refresh and refresh on button click
   - The app targets the android version 28 and is backword compatible.
 
 ### Other
