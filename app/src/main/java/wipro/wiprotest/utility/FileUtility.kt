@@ -17,8 +17,6 @@ fun saveObject(context:Context, data :Data,fileName:String){
 
     out.close()
     file.close()
-
-    println("Object has been serialized")
 }
 
 fun retriveObject(context:Context,fileName:String):Data?{

@@ -23,7 +23,7 @@ import wipro.wiprotest.utility.retriveObjectFailure
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+class TestsForActivityLanding {
 
 
     internal class ApplicationStub : Application()
@@ -57,7 +57,6 @@ class ExampleInstrumentedTest {
 
         // not using data binding here for obvious reasons.
         val view = activityLanding?.findViewById<RecyclerView>(R.id.recyclerView)
-        Log.e("message","nice")
     }
 
     @Test

@@ -19,7 +19,7 @@ import wipro.wiprotest.utility.saveObject
 import wipro.wiprotest.viewmodel.LandingViewModel
 
 // note the use of base activity class for common functionality
-class ActivityLanding : ActivityBase(),LandingRecyclerAdapter.OnItemClickListener {
+class ActivityLanding : BaseActivity(),LandingRecyclerAdapter.OnItemClickListener {
 
     lateinit var viewModel: LandingViewModel
     lateinit var context: Context
