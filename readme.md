@@ -18,11 +18,11 @@ Things to note
   - Will make optimizations on request.
   
 ### Libraries used
-  - android support libraries for backword compatibility version: 28.0.0, constraint layout version:1.1.3
-  - android lifecycle libraries for live data and view model support version: 1.1.1
-  - android testing framework version 1.0.2, espresso version :3.0.2, robo electric version 4.0-beta-1
-  - retrofit and gson for fetching data from server version :2.4.0
-  - Picasso for downloading and using images version:2.5.2
+  - **android support libraries for backword compatibility** version: 28.0.0, **constraint layout** version:1.1.3
+  - **android lifecycle libraries for live data and view model support** version: 1.1.1
+  - **android testing framework** version 1.0.2, **espresso** version :3.0.2, **robo electric** version 4.0-beta-1
+  - **retrofit and gson for fetching data from server** version :2.4.0
+  - **Picasso for downloading and using images** version:2.5.2
   
 
 ### Other
