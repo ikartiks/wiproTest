@@ -16,6 +16,14 @@ Things to note
   - The app targets the android version 28 and is backword compatible.
   - I havent added a loader right now for the network call, but for the same I would ideally use my library below and show a beautiful gif insted of a std popup.
   - Will make optimizations on request.
+  
+### Libraries used
+  - android support libraries for backword compatibility version: 28.0.0, constraint layout version:1.1.3
+  - android lifecycle libraries for live data and view model support version: 1.1.1
+  - android testing framework version 1.0.2, espresso version :3.0.2, robo electric version 4.0-beta-1
+  - retrofit and gson for fetching data from server version :2.4.0
+  - Picasso for downloading and using images version:2.5.2
+  
 
 ### Other
 
