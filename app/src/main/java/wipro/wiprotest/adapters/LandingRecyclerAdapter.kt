@@ -15,12 +15,12 @@ import wipro.wiprotest.model.Rows
 
 import java.util.ArrayList
 
-class LandingRecyclerAdapter(internal var items: ArrayList<Rows>?, val con:Context?) :
+class LandingRecyclerAdapter(var items: ArrayList<Rows>?, val con:Context?) :
     RecyclerView.Adapter<LandingRecyclerAdapter.ViewHolder>() {
 
 
     //Cursor data;
-    internal var clickListener: OnItemClickListener? = null
+    var clickListener: OnItemClickListener? = null
 
     fun clearItems(){
         items?.clear()

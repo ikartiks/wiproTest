@@ -19,9 +19,9 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
 
-        <instrumentation
-                android:name="android.test.InstrumentationTestRunner"
-                android:targetPackage="wipro.wiprotest" />
+        <!--<instrumentation-->
+                <!--android:name="android.test.InstrumentationTestRunner"-->
+                <!--android:targetPackage="wipro.wiprotest" />-->
 
 
         <activity android:name=".ActivityLanding">

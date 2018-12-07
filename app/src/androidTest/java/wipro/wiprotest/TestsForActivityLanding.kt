@@ -6,6 +6,8 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.widget.LinearLayout
+import android.widget.TextView
 import org.junit.After
 
 import org.junit.Test
@@ -54,9 +56,9 @@ class TestsForActivityLanding {
 
     @Test
     fun successfulAppLaunch() {
-
-        // not using data binding here for obvious reasons.
+        
         val view = activityLanding?.findViewById<RecyclerView>(R.id.recyclerView)
+        assertNotNull(view)
     }
 
     @Test

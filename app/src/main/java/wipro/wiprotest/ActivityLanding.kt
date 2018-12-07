@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
+import android.os.Message
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
@@ -14,7 +15,7 @@ import android.view.View
 import com.kartik.grevocab.adapters.LandingRecyclerAdapter
 import kotlinx.android.synthetic.main.activity_landing.*
 import wipro.wiprotest.model.Data
-import wipro.wiprotest.utility.retriveObject
+import wipro.wiprotest.utility.CacheLoader
 import wipro.wiprotest.utility.saveObject
 import wipro.wiprotest.viewmodel.LandingViewModel
 
@@ -23,11 +24,23 @@ class ActivityLanding : BaseActivity(),LandingRecyclerAdapter.OnItemClickListene
 
     lateinit var viewModel: LandingViewModel
     lateinit var context: Context
+    lateinit var handler :Handler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing)
         setSupportActionBar(toolbar)
+        handler  = object : Handler() {
+            override fun handleMessage(message: Message) {
+                // code here
+                if(message.what==1){
+                    val bundle = message.data as Bundle
+                    val data = bundle.getParcelable<Data>("data")
+                    data?.let { onDataChange(it) }
+                }
+            }
+        }
+
         viewModel = ViewModelProviders.of(this).get(LandingViewModel::class.java)
 
         context=this
@@ -36,33 +49,29 @@ class ActivityLanding : BaseActivity(),LandingRecyclerAdapter.OnItemClickListene
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
+        //not loading cache on main thread, and hanging the ui
+        Thread(CacheLoader(handler,this)).start()
 
-        val handler =Handler()
-        handler.postDelayed ({
+        swipeRefreshLayout.setOnRefreshListener {
+            // cancel the Visual indication of a refresh
+            swipeRefreshLayout.isRefreshing = false
+            refresh()
+        }
 
-            //for caching
-            val data = retriveObject(this,getString(R.string.fileName))
-            data?.let { onDataChange(it) }
 
-            swipeRefreshLayout.setOnRefreshListener {
-                // cancel the Visual indication of a refresh
-                swipeRefreshLayout.isRefreshing = false
-                refresh()
+
+        if(!isConnected()){
+            showCustomMessage(getString(R.string.noInternet))
+            return
+        }
+
+        viewModel.getMutableObject()?.observe(this, object : Observer<Data> {
+            override fun onChanged(data: Data?) {
+
+                data?.let { saveObject(context, data!!, getString(R.string.fileName)) }
+                onDataChange(data)
             }
-
-            if(!isConnected()){
-                showCustomMessage(getString(R.string.noInternet))
-                return@postDelayed
-            }
-
-            viewModel.getMutableObject()?.observe(this, object : Observer<Data> {
-                override fun onChanged(data: Data?) {
-
-                    data?.let { saveObject(context, data!!, getString(R.string.fileName)) }
-                    onDataChange(data)
-                }
-            })
-        },200)
+        })
     }
 
     // note the use of inline functions to reduce repetition of code at various places.
