@@ -9,18 +9,24 @@ Item completion status
   
 Things to note
 
-  - Used kotlin (its DI for views as well) , retrofit, picasso, roboelectric
-  - MVVM pattern with view models and live data as requested
-  - I havent provided gradle wrapper, please select default one. Gradle.properties file has also been modified for instrumentation tests and hence commited
-  - Implimented both swipe to refresh and refresh on button click
-  - The app targets the android version 28 and is backword compatible.
-  - I havent added a loader right now for the network call, but for the same I would ideally use my library below and show a beautiful gif insted of a std popup.
+  - Implemented both swipe to refresh and refresh on button click.
+  - The app targets the android version 28 and is backward compatible.
+  
   - Will make optimizations on request.
+  - There are 2 tests, one is for successful app launch and 
+    2nd one is for receiving empty data from the server.
+  - Caching has been implemented at 3 levels, (i) request uses servers max-age parameter
+   to query only after that interval, (ii) once loaded view model ensures you data is not fetched again 
+   until you hit refresh or on load. (iii) I have also cached response from server to local file 
+   (for 2nd run scenario),however deleting it has not been implemented yet,
+    it gets overridden on every request or app start 
+  - I haven't added a loader right now for the network call, but for the same 
+       I would ideally use my library below and show a beautiful gif instead of a std popup.
   
 ### Libraries used
-  - **android support libraries for backword compatibility** version: 28.0.0, **constraint layout** version:1.1.3
+  - **android support libraries for backward compatibility** version: 28.0.0, **constraint layout** version:1.1.3
   - **android lifecycle libraries for live data and view model support** version: 1.1.1
-  - **android testing framework** version 1.0.2, **espresso** version :3.0.2, **robo electric** version 4.0-beta-1
+  - **android testing framework** version 1.0.2, **espresso** version :3.0.2
   - **retrofit and gson for fetching data from server** version :2.4.0
   - **Picasso for downloading and using images** version:2.5.2
   

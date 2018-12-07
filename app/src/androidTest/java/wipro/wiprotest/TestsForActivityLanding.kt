@@ -51,6 +51,8 @@ class TestsForActivityLanding {
         assertNotNull(view)
     }
 
+    //this test failed initially, however i added code to handle receiving an empty object from server.
+    // so as of now both tests are of success scenarios
     @Test
     fun testResponseFromServer(){
 
