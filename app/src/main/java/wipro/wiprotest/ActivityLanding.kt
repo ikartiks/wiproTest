@@ -41,6 +41,7 @@ class ActivityLanding : BaseActivity(), LandingRecyclerAdapter.OnItemClickListen
         }
 
         viewModel = ViewModelProviders.of(this).get(LandingViewModel::class.java)
+        viewModel.setCacheDirectory(this.cacheDir)
 
         context = this
     }

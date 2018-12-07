@@ -9,7 +9,7 @@ import java.lang.Exception
 
 fun saveObject(context:Context, data :Data,fileName:String){
 
-    val file =  context.openFileOutput(fileName, Context.MODE_PRIVATE);
+    val file =  context.openFileOutput(fileName, Context.MODE_PRIVATE)
     val out = ObjectOutputStream(file)
 
     // Method for serialization of object
