@@ -15,11 +15,10 @@ Things to note
   - Will make optimizations on request.
   - There are 2 tests, one is for successful app launch and 
     2nd one is for receiving empty data from the server.
-  - Caching has been implemented at 3 levels, (i) request uses servers max-age parameter
-   to query only after that interval, (ii) once loaded view model ensures you data is not fetched again 
-   until you hit refresh or on load. (iii) I have also cached response from server to local file 
-   (for 2nd run scenario),however deleting it has not been implemented yet,
-    it gets overridden on every request or app start 
+  - Caching has been implemented at 3 levels, 
+        --(i) request uses servers max-age parameter to fetch data again only after that interval.
+--(ii) once loaded view model ensures you data is not fetched again until you hit refresh or on app load.
+--(iii) I have also cached response from server to local file (so page is not blank when the app starts), however deleting it has not been implemented yet, it gets overridden on every request or app start 
   - I haven't added a loader right now for the network call, but for the same 
        I would ideally use my library below and show a beautiful gif instead of a std popup.
   
