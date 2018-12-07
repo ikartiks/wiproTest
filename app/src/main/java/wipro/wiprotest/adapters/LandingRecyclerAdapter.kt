@@ -28,7 +28,8 @@ class LandingRecyclerAdapter(var items: ArrayList<Rows>?, val con:Context?) :
 
     override fun getItemCount(): Int {
 
-        return items?.size!!
+        items?.let { return it.size }
+        return 0
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

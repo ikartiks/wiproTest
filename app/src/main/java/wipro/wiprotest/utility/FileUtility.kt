@@ -34,12 +34,3 @@ fun retriveObject(context:Context,fileName:String):Data?{
 
 }
 
-fun retriveObjectFailure(context:Context,fileName:String):Data?{
-    
-    val fis = context.openFileInput(fileName)
-    val ois = ObjectInputStream(fis)
-    val obj = ois.readObject()
-    ois.close()
-    fis.close()
-    return obj as Data
-}

@@ -1,13 +1,11 @@
 package wipro.wiprotest
 
-import android.app.Application
+
 import android.support.test.InstrumentationRegistry
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.support.v7.widget.RecyclerView
-import android.util.Log
-import android.widget.LinearLayout
-import android.widget.TextView
+import com.kartik.grevocab.adapters.LandingRecyclerAdapter
 import org.junit.After
 
 import org.junit.Test
@@ -16,7 +14,7 @@ import org.junit.runner.RunWith
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
-import wipro.wiprotest.utility.retriveObjectFailure
+import wipro.wiprotest.model.Data
 
 
 /**
@@ -27,15 +25,7 @@ import wipro.wiprotest.utility.retriveObjectFailure
 @RunWith(AndroidJUnit4::class)
 class TestsForActivityLanding {
 
-
-    internal class ApplicationStub : Application()
-
-    @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("wipro.wiprotest", appContext.packageName)
-    }
+    //internal class ApplicationStub : Application()
 
     @Rule
     @JvmField
@@ -62,9 +52,14 @@ class TestsForActivityLanding {
     }
 
     @Test
-    fun failureScenario() {
+    fun testResponseFromServer(){
 
-        val data = retriveObjectFailure(InstrumentationRegistry.getContext(),"data")
-        data?.let { Log.e("app launch successfully","nice") }
+        val data=Data()
+        activityLanding?.runOnUiThread {
+            activityLanding?.onDataChange(data)
+        }
+        val view = activityLanding?.findViewById<RecyclerView>(R.id.recyclerView)
+        val adapter = view?.adapter as LandingRecyclerAdapter
+        assertNotNull(adapter)
     }
 }

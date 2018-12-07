@@ -10,38 +10,6 @@ import android.support.v7.app.AppCompatActivity
 abstract class BaseActivity : AppCompatActivity(){
 
 
-    var screenWidth: Int = 0
-    var screenHeight:Int = 0
-    var statusBarHeight:Int = 0
-    var navigationBarHeight:Int = 0
-
-
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
-
-
-        val resources = this.resources
-        var resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
-        if (resourceId > 0) {
-            statusBarHeight = resources.getDimensionPixelSize(resourceId)
-        } else {
-            statusBarHeight = 0
-        }
-        resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
-        if (resourceId > 0) {
-            navigationBarHeight = resources.getDimensionPixelSize(resourceId)
-        } else {
-            navigationBarHeight = 0
-        }
-
-        val display = windowManager.defaultDisplay
-        val size = Point()
-        display.getSize(size)
-        screenWidth = size.x
-        screenHeight = size.y
-
-    }
-
     fun isConnected(): Boolean {
 
         val connectivityManager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

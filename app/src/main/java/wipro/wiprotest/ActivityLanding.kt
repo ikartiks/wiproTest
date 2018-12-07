@@ -15,25 +15,24 @@ import android.view.View
 import com.kartik.grevocab.adapters.LandingRecyclerAdapter
 import kotlinx.android.synthetic.main.activity_landing.*
 import wipro.wiprotest.model.Data
-import wipro.wiprotest.utility.CacheLoader
-import wipro.wiprotest.utility.saveObject
+import wipro.wiprotest.utility.CacheManager
 import wipro.wiprotest.viewmodel.LandingViewModel
 
 // note the use of base activity class for common functionality
-class ActivityLanding : BaseActivity(),LandingRecyclerAdapter.OnItemClickListener {
+class ActivityLanding : BaseActivity(), LandingRecyclerAdapter.OnItemClickListener {
 
     lateinit var viewModel: LandingViewModel
     lateinit var context: Context
-    lateinit var handler :Handler
+    lateinit var handler: Handler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing)
         setSupportActionBar(toolbar)
-        handler  = object : Handler() {
+        handler = object : Handler() {
             override fun handleMessage(message: Message) {
                 // code here
-                if(message.what==1){
+                if (message.what == 1) {
                     val bundle = message.data as Bundle
                     val data = bundle.getParcelable<Data>("data")
                     data?.let { onDataChange(it) }
@@ -43,24 +42,21 @@ class ActivityLanding : BaseActivity(),LandingRecyclerAdapter.OnItemClickListene
 
         viewModel = ViewModelProviders.of(this).get(LandingViewModel::class.java)
 
-        context=this
+        context = this
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
         //not loading cache on main thread, and hanging the ui
-        Thread(CacheLoader(handler,this)).start()
-
+        CacheManager(handler, this).retriveCache()
         swipeRefreshLayout.setOnRefreshListener {
             // cancel the Visual indication of a refresh
             swipeRefreshLayout.isRefreshing = false
             refresh()
         }
 
-
-
-        if(!isConnected()){
+        if (!isConnected()) {
             showCustomMessage(getString(R.string.noInternet))
             return
         }
@@ -68,16 +64,16 @@ class ActivityLanding : BaseActivity(),LandingRecyclerAdapter.OnItemClickListene
         viewModel.getMutableObject()?.observe(this, object : Observer<Data> {
             override fun onChanged(data: Data?) {
 
-                data?.let { saveObject(context, data!!, getString(R.string.fileName)) }
+                CacheManager(context, data, "data").saveCache()
                 onDataChange(data)
             }
         })
     }
 
-    // note the use of inline functions to reduce repetition of code at various places.
-    inline fun refresh(){
 
-        if(!isConnected()){
+    fun refresh() {
+
+        if (!isConnected()) {
             showCustomMessage(getString(R.string.noInternet))
             return
         }
@@ -92,18 +88,17 @@ class ActivityLanding : BaseActivity(),LandingRecyclerAdapter.OnItemClickListene
         })
     }
 
-    // note the use of inline functions to reduce repetition of code at various places.
-    inline fun onDataChange(data: Data?){
+
+    fun onDataChange(data: Data?) {
         val mLayoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = mLayoutManager
         recyclerView.itemAnimator = DefaultItemAnimator()
 
-        val adapter= LandingRecyclerAdapter(data?.rows,this)
-        recyclerView.adapter=adapter
+        val adapter = LandingRecyclerAdapter(data?.rows, this)
+        recyclerView.adapter = adapter
 
-        adapter?.setOnItemClickLickListener(this)
-
-        supportActionBar?.title=data?.title!!
+        adapter.setOnItemClickLickListener(this)
+        data?.title?.let { supportActionBar?.title = it }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -128,9 +123,7 @@ class ActivityLanding : BaseActivity(),LandingRecyclerAdapter.OnItemClickListene
     }
 
     override fun onItemClick(view: View, position: Int) {
-
-        view.tag?.let { showCustomMessage((view.tag as String)+ " clicked") }
-
+        view.tag?.let { showCustomMessage((view.tag as String) + " clicked") }
     }
 
 }
